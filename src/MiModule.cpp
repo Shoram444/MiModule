@@ -182,6 +182,11 @@ void MiModule::fillSD(datatools::things& workI)
 		                 		 	 		SD.get_step_hit("__visu.tracks", ihit).get_position_stop() .y(),
 		                 	 	 	 		SD.get_step_hit("__visu.tracks", ihit).get_position_stop() .z());
 
+						visu_h->setMomentumStart(	SD.get_step_hit("__visu.tracks", ihit).get_momentum_start().x(),
+				                 		 	 		SD.get_step_hit("__visu.tracks", ihit).get_momentum_start().y(),
+				                 		 	 		SD.get_step_hit("__visu.tracks", ihit).get_momentum_start().z());
+
+
 						// Get visualisation step auxiliaries
 						if ( SD.get_step_hit("__visu.tracks", ihit).has_time_start() )
 						{
@@ -210,6 +215,18 @@ void MiModule::fillSD(datatools::things& workI)
 						if ( SD.get_step_hit("__visu.tracks", ihit).has_energy_deposit())
 						{
 							visu_h->setEdep(     SD.get_step_hit("__visu.tracks", ihit).get_energy_deposit() );
+						}
+						if ( SD.get_step_hit("__visu.tracks", ihit).has_hit_id())
+						{
+							visu_h->setHitID(     SD.get_step_hit("__visu.tracks", ihit).get_hit_id() );
+						}
+						if ( SD.get_step_hit("__visu.tracks", ihit).has_leaving_volume())
+						{
+							visu_h->setLeftVolume( SD.get_step_hit("__visu.tracks", ihit).is_leaving_volume() );
+						}
+						if ( SD.get_step_hit("__visu.tracks", ihit).has_entering_volume())
+						{
+							visu_h->setEnteredVolume( SD.get_step_hit("__visu.tracks", ihit).is_entering_volume() );
 						}
 		
 						SDb->addvisuhit(*visu_h);
@@ -278,6 +295,28 @@ void MiModule::fillCD(datatools::things& workI)
 
 			delete cal;
 			tene += ene;
+		}
+
+		//// From Filip, adding tracker hits
+		double X, Y, Z, R;
+		for(int ihit = 0;ihit < CD.tracker_hits().size();ihit++)
+		{
+			MiCDTrackerHit* th = new MiCDTrackerHit();
+			
+			X = CD.tracker_hits().at(ihit).get().get_x();
+			Y = CD.tracker_hits().at(ihit).get().get_y();
+			Z = CD.tracker_hits().at(ihit).get().get_z();
+			R = CD.tracker_hits().at(ihit).get().get_r();
+			
+			th->setX(X);
+			th->setY(Y);
+			th->setZ(Z);
+			th->setR(R);
+			
+			CDb->addtrackerhit(*th);
+			
+			delete th;
+			
 		}
 
 		E.setCD(*CDb);

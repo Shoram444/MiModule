@@ -51,6 +51,8 @@ echo " "
       	      rootcint -f ../lib/MiVector3Ddict.cpp    MiVector3D.h+
 	echo "rootcint: ./include/MiVertex.cpp      -> ./lib/MiVertexdict_rdict.pcm        + ./src/dicts/MiVertexdict.cpp"
       	      rootcint -f ../lib/MiVertexdict.cpp      MiVertex.h+
+	echo "rootcint: ./include/MiCDTrackerHit.h     -> ./lib/MiCDTrackerHitdict_rdict.pcm     + ./src/dicts/MiCDTrackerHitdict.cpp"
+		      rootcint -f ../lib/MiCDTrackerHitdict.cpp   MiCDTrackerHit.h+
 	echo " "
 	echo "Dictionaries generated!"
 	echo " "

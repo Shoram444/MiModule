@@ -66,3 +66,20 @@ void MiCD::print()
 		}
 	}
 }
+
+// From Filip, tracker
+int MiCD::getnooftrackerh()
+{
+	return trackerhit.size();
+}
+
+void MiCD::addtrackerhit(MiCDTrackerHit& in_tracker)
+{
+	trackerhit.push_back(in_tracker);
+}
+
+vector<MiCDTrackerHit>*  MiCD::gettrackerhitv()
+{
+	return &trackerhit;
+}
+// From Filip, tracker
