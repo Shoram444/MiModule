@@ -74,9 +74,9 @@ class MiSDVisuHit: public TObject
 		bool 		is_init_start;				// Added 13.10.2020
 		bool 		is_init_stop;				// Added 13.10.2020
 
-		string     	particle_name;				// Added 27.3.2018 19:10
+		string 		particle_name;				// Added 27.3.2018 19:10
 		
-		int			parent_ID;				// Added 28.3.2018 15:25
+		int 		parent_ID;				// Added 28.3.2018 15:25
 		int 		track_ID;				// Added 28.3.2018 15:25
 
 		string 		material;				// Added 28.3.2018 15:25
