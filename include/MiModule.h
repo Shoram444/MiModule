@@ -15,10 +15,15 @@
 #include "MiSD.h"
 #include "MiSDCaloHit.h"
 #include "MiSDParticle.h"
+#include "MiCDTrackerHit.h"
+
 
 // ROOT hlavicky
 #include "TFile.h"
 #include "TTree.h"
+#include "TMath.h"
+#include "TF1.h"
+#include "TVector3.h"
 
 // Standardne hlavicky
 #include "ctime"
