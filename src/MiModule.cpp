@@ -404,9 +404,9 @@ void MiModule::fillPTD(datatools::things& workI)
 	   		{
 				MiVertex* ver = new MiVertex();
 	      
-	      			ver->setr(ivertex->get().get_spot().get_position().x(),
-	      				  ivertex->get().get_spot().get_position().y(),
-	      				  ivertex->get().get_spot().get_position().z());
+	      			ver->setr(ivertex->get().get_position().x(),
+	      				  ivertex->get().get_position().y(),
+	      				  ivertex->get().get_position().z());
 
 				if(particle_track::vertex_is_on_source_foil(ivertex->get()))      
 				{
