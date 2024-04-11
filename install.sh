@@ -2,7 +2,8 @@
 
 	echo "                                          "
 	echo "Please enter the full path to *FALAISE* include files:"
-	read FAL_INC
+	# read FAL_INC
+	FAL_INC=/sps/nemo/sw/snsw/2023/opt/falaise-5.1.0/include/
 	echo "                                          "
 	
 	rm -rf build testing_products lib ./src/dicts/
