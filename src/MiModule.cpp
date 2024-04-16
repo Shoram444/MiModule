@@ -398,35 +398,44 @@ void MiModule::fillPTD(datatools::things& workI)
 				}
 			}
 
-	  		for (particle_track::vertex_collection_type::const_iterator ivertex = iparticle->get().get_vertices().begin(); 
-				ivertex!= iparticle->get().get_vertices().end(); 
-				++ivertex)
+			const std::vector<datatools::handle<snemo::datamodel::vertex>> & particle_vertices = iparticle->get().get_vertices();
+
+	  		for (datatools::handle<vertex> ivertex : particle_vertices)
 	   		{
+				snemo::datamodel::vertex vtx = ivertex.get(); // get the vertex
 				MiVertex* ver = new MiVertex();
 	      
-	      			ver->setr(ivertex->get().get_position().x(),
-	      				  ivertex->get().get_position().y(),
-	      				  ivertex->get().get_position().z());
+	      			ver->setr(vtx.get_spot().get_position().x(),
+	      				  vtx.get_spot().get_position().y(),
+	      				  vtx.get_spot().get_position().z());
 
-				if(particle_track::vertex_is_on_source_foil(ivertex->get()))      
+				if(vtx.is_on_source_foil())      
 				{
 		  			ver->setpos("source foil");
 				}
-	      			else if(particle_track::vertex_is_on_wire(ivertex->get()))
+	      			else if(vtx.is_on_wire())
 				{
 		  			ver->setpos("wire");
 				}
-	      			else if(particle_track::vertex_is_on_main_calorimeter(ivertex->get()))
+	      			else if(vtx.is_on_main_calorimeter())
 				{
 		  			ver->setpos("calo");
 				}
-	     			else if(particle_track::vertex_is_on_x_calorimeter(ivertex->get()))  
+	     			else if(vtx.is_on_x_calorimeter())  
 				{
 		  			ver->setpos("xcalo");
 				}
-	      			else if(particle_track::vertex_is_on_gamma_veto (ivertex->get())) 
+	      			else if(vtx.is_on_gamma_veto ()) 
 				{
 		  			ver->setpos("gveto");
+				}
+					else if(vtx.is_on_calibration_source ()) 
+				{
+		  			ver->setpos("calibration source");
+				}
+					else if(vtx.is_on_source_gap ()) 
+				{
+		  			ver->setpos("source gap");
 				}
 	      			else
 				{

@@ -38,7 +38,7 @@ add_test(NAME    testMiModule_simulate
 
 # - Reconstruct
 add_test(NAME    testMiModule_reconstruct
-         COMMAND Falaise::flreconstruct -i test-simu.brio -p urn:snemo:demonstrator:reconstruction:1.0.0 -o test-reco.brio
+         COMMAND Falaise::flreconstruct -i test-simu.brio -p urn:snemo:demonstrator:reconstruction:3.0:pipeline:official-3.0 -o test-reco.brio
          WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/../testing_products/)
 
 set_tests_properties(testMiModule_reconstruct PROPERTIES DEPENDS testSensitivityModule_simulate)

@@ -7,6 +7,7 @@
 #include "falaise/snemo/processing/module.h"
 #include "falaise/snemo/datamodels/calibrated_data.h"
 #include "falaise/snemo/datamodels/particle_track_data.h"
+#include "falaise/snemo/datamodels/vertex_utils.h"
 
 // Mi hlavicky
 #include "MiCD.h"
