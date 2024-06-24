@@ -47,7 +47,7 @@ class MiSDVisuHit: public TObject
 		double 		getLength();					// Added 13.10.2020
 		string 		getMaterial();					// Added 28.3.2018 15:25
 		int 		getParentID();					// Added 28.3.2018 15:25
-		string      getParticleName();				// Added 27.3.2018 19:10
+		string 		getParticleName();				// Added 27.3.2018 19:10
 		string 		getProcess();					// Added 28.3.2018 15:25
 		MiVector3D* getStart();
 		MiVector3D* getStop();
@@ -74,10 +74,10 @@ class MiSDVisuHit: public TObject
 		bool 		is_init_start;				// Added 13.10.2020
 		bool 		is_init_stop;				// Added 13.10.2020
 
-		string     	particle_name;				// Added 27.3.2018 19:10
+		string 		particle_name;				// Added 27.3.2018 19:10
 		
-		int			parent_ID;				// Added 28.3.2018 15:25
-		int        	track_ID;				// Added 28.3.2018 15:25
+		int 		parent_ID;				// Added 28.3.2018 15:25
+		int 		track_ID;				// Added 28.3.2018 15:25
 
 		string 		material;				// Added 28.3.2018 15:25
 		string		process;				// Added 28.3.2018 15:25
@@ -92,9 +92,9 @@ class MiSDVisuHit: public TObject
 		double 		Edep;					// Added 16.10.2020
 
 		///////////// NEW CHANGES!!
-		int        	hit_ID;							// Added 11.7.2022 @MP
-		bool        left_volume 	= false;        // Added 12.7.2022 @MP
-		bool     	entered_volume 	= false; 		// Added 12.7.2022 @MP
+		int 		hit_ID;							// Added 11.7.2022 @MP
+		bool 		left_volume 	= false;        // Added 12.7.2022 @MP
+		bool 		entered_volume 	= false; 		// Added 12.7.2022 @MP
 
 		TVector3 momentumStart;  					// Added 13.7.2022 @MP
 
