@@ -433,6 +433,10 @@ void MiModule::fillPTD(datatools::things& workI)
 				{
 		  			ver->setpos("calibration source");
 				}
+					else if(vtx.is_on_reference_source_plane()) 
+				{
+		  			ver->setpos("reference source plane");
+				}
 					else if(vtx.is_on_source_gap ()) 
 				{
 		  			ver->setpos("source gap");
