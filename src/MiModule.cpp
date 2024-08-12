@@ -451,6 +451,26 @@ void MiModule::fillPTD(datatools::things& workI)
 				delete ver;
 			}
 
+			if( iparticle->get().has_trajectory())
+            {
+                const snemo::datamodel::tracker_trajectory & trajectory = iparticle->get().get_trajectory();
+				
+				// first need to figure out which end of the trajectory is closer to foil
+				if( TMath::Abs(trajectory.get_pattern().get_first().x()) <= trajectory.get_pattern().get_last().x() )
+                {
+					// if directions do not match, reverse them. 
+                    double mul = ( trajectory.get_pattern().get_first_direction().x() * trajectory.get_pattern().get_first().x() > 0 ) ? 1.0 : -1.0;
+                    geomtools::vector_3d direction = trajectory.get_pattern().get_first_direction() * mul; 
+                    p->setdirectionfromfoil(direction.x(), direction.y(), direction.z());
+                }
+                else
+                {
+                    double mul = ( trajectory.get_pattern().get_last_direction().x() * trajectory.get_pattern().get_last().x() > 0 ) ? 1.0 : -1.0;
+                    geomtools::vector_3d direction = trajectory.get_pattern().get_last_direction() * mul; 
+                    p->setdirectionfromfoil(direction.x(), direction.y(), direction.z());
+                }
+			}
+
 			PTDb->addpart(*p);	
 			
 			delete p;

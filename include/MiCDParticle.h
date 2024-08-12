@@ -3,6 +3,7 @@
 
 // ROOT headers
 #include "TObject.h"
+#include "TVector3.h"
 
 // MiHeaders
 #include "MiCDCaloHit.h"
@@ -37,12 +38,17 @@ class MiCDParticle: public TObject
 		int setcharge(int in_ch);
 		int setvertex(MiVertex& in_vertex);
 
+		TVector3 getdirectionfromfoil();  	// Added 12.8.2024 @MP
+		int setdirectionfromfoil(double x, double y, double z); // Added 12.8.2024 @MP
+
 	private:
 
 		int charge;
 
 		vector<MiCDCaloHit> calohit;	// Particle calibrated calo hit(s)
 		vector<MiVertex> vertex;	// Particle vertices
+
+		TVector3 directionFromFoil;  	// Added 12.8.2024 @MP
 
 	ClassDef(MiCDParticle,1);		
 };

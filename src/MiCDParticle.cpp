@@ -67,4 +67,14 @@ int MiCDParticle::setvertex(MiVertex& in_vertex)
 	return 0;
 }
 
+TVector3 MiCDParticle::getdirectionfromfoil()
+{
+	return directionFromFoil; 
+}  	
+int MiCDParticle::setdirectionfromfoil(double x, double y, double z)
+{
+	directionFromFoil.SetXYZ(x,y,z);
+	return 0;
+}
+
 
