@@ -6,3 +6,7 @@ src/dicts/
 
 simu.conf
 variant.profile
+Default.root
+cd.brio
+test-reco.brio
+.vscode/settings.json

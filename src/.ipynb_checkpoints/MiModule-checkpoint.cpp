@@ -291,9 +291,9 @@ void MiModule::fillCD(datatools::things& workI)
 			cal->sett(time / CLHEP::ns);
 			cal->setts(stime / CLHEP::ns);
 
-			if( CD.calorimeter_hits().at(ihit).get().get_auxiliaries().has_key("evis_bcu") )
+			if( CD.calorimeter_hits().at(ihit).get().get_auxiliaries().has_key("edep_bcu") )
 			{
-				cal->setEvis_bcu(CD.calorimeter_hits().at(ihit).get().get_auxiliaries().fetch_real("evis_bcu") / CLHEP::keV );
+				cal->setEdep_bcu(CD.calorimeter_hits().at(ihit).get().get_auxiliaries().fetch_real("edep_bcu") / CLHEP::keV );
 			}
 
 			CDb->addcalohit(*cal);
@@ -397,7 +397,6 @@ void MiModule::fillPTD(datatools::things& workI)
 					cal->sett(time / CLHEP::ns);
 					cal->setts(stime / CLHEP::ns);
 
-
 					p->addcalohit(*cal);
 
 					delete cal;
@@ -475,8 +474,6 @@ void MiModule::fillPTD(datatools::things& workI)
                     geomtools::vector_3d direction = trajectory.get_pattern().get_last_direction() * mul; 
                     p->setdirectionfromfoil(direction.x(), direction.y(), direction.z());
                 }
-
-				p->setTrackLength(trajectory.get_pattern().get_shape().get_length());
 			}
 
 			PTDb->addpart(*p);	
@@ -485,14 +482,6 @@ void MiModule::fillPTD(datatools::things& workI)
 		}	
 
 		E.setPTD(*PTDb);
-
-		// Calculate Pint and Pext
-		if (PTDb->getpartv()->size() == 2)
-		{
-			E.setPint(calculatePint(*PTDb));
-			E.setPext(calculatePext(*PTDb));
-		};
-
 
 		delete PTDb;
 	}
@@ -516,114 +505,4 @@ void MiModule::setInitialized(bool _init)
 bool MiModule::isInitialized()
 {
 	return init;
-}
-
-double MiModule::calculatePint(MiPTD& in_PTD)
-{
-	double E[2];           // storage for particle energies [MeV]
-    double ESigma[2];      // storage for particle energy sigmas [MeV]    
-    double l[2];           // storage for particle track lengths [mm]
-    double tExp[2];        // storage for particles calo hit times (experimental) [ns]
-    double tExpSigma[2];   // storage for particles calo hit time sigmas [ns]
-
-    double beta[2]; // get_beta()
-    double tTOF[2]; // get_tTOF()
-    double sigmaTot[2]; // get_sigmaTot()
-
-    int i = 0;
-    for ( auto& particle : *in_PTD.getpartv() )
-    {
-        E[i]            = particle.getcalohit(0)->getE()*1000.0; // get energy in MeV
-        ESigma[i]       = particle.getcalohit(0)->getEs()*1000.0; //sigma in MeV
-        l[i]            = particle.getTrackLength();
-        tExp[i]         = particle.getcalohit(0)->gett();
-        tExpSigma[i]    = particle.getcalohit(0)->getts();
-
-        beta[i]         = get_beta(E[i]);             // sqrt(_E * (_E + 2 * m_e)) / (_E + m_e)
-        tTOF[i]         = get_tTOF(l[i], beta[i]);    // _l / (_beta * Constants::LIGHT_SPEED)
-        sigmaTot[i]     = get_sigmaTot(tTOF[i], tExpSigma[i], E[i], ESigma[i]);
-
-        i++;
-    }
-
-    double chi2 = get_chi2_int(tExp, l, beta, sigmaTot) ; // ( (tExp2 - l2/(beta2 * c )) - (tExp1 - l1/(beta1 * c )) )^2 / ( sigmaTot1 + sigmaTot2 )
-    double Pint = TMath::Prob(chi2, 1); // returns 1 - P(a,x)
-
-	return Pint;
-}
-
-double MiModule::calculatePext(MiPTD& in_PTD)
-{
-	double E[2];           // storage for particle energies [MeV]
-    double ESigma[2];      // storage for particle energy sigmas [MeV]    
-    double l[2];           // storage for particle track lengths [mm]
-    double tExp[2];        // storage for particles calo hit times (experimental) [ns]
-    double tExpSigma[2];   // storage for particles calo hit time sigmas [ns]
-
-    double beta[2]; // get_beta()
-    double tTOF[2]; // get_tTOF()
-    double sigmaTot[2]; // get_sigmaTot()
-
-    int i = 0;
-    for ( auto& particle : *in_PTD.getpartv() )
-    {
-        E[i]            = particle.getcalohit(0)->getE()*1000.0; // get energy in MeV
-        ESigma[i]       = particle.getcalohit(0)->getEs()*1000.0; //sigma in MeV
-        l[i]            = particle.getTrackLength();
-        tExp[i]         = particle.getcalohit(0)->gett();
-        tExpSigma[i]    = particle.getcalohit(0)->getts();
-
-        beta[i]         = get_beta(E[i]);             // sqrt(_E * (_E + 2 * m_e)) / (_E + m_e)
-        tTOF[i]         = get_tTOF(l[i], beta[i]);    // _l / (_beta * Constants::LIGHT_SPEED)
-        sigmaTot[i]     = get_sigmaTot(tTOF[i], tExpSigma[i], E[i], ESigma[i]);
-
-        i++;
-    }
-
-    double chi2 = get_chi2_ext(tExp, l, beta, sigmaTot) ; // ( (tExp2 - l2/(beta2 * c )) - (tExp1 - l1/(beta1 * c )) )^2 / ( sigmaTot1 + sigmaTot2 )
-    double Pext = TMath::Prob(chi2, 1); // returns 1 - P(a,x)
-
-	return Pext;
-}
-
-double MiModule::get_beta(double _E)
-{
-    return TMath::Sqrt(_E * (_E + 2 * ELECTRON_MASS_MEV)) / (_E + ELECTRON_MASS_MEV);
-}
-
-double MiModule::get_tTOF(double _l, double _beta)
-{
-    return _l/(_beta * LIGHT_SPEED);
-}
-
-double MiModule::get_sigmaTot(double _tTOF, double _tExpSigma, double _E, double _ESigma)
-{
-    double m            = ELECTRON_MASS_MEV;
-
-    double tExpSigma2   = _tExpSigma * _tExpSigma;
-
-    double dfdb         = pow(_tTOF * _tTOF * m * m, 2) / 
-                          pow(_E * (_E + m) * (_E + 2 * m), 2);  // this factor equals to (d(tTOF)/d(beta))^2 from propagating uncertainties of tTOF
-
-    double ESigma2      = _ESigma * _ESigma;
-
-    return tExpSigma2 + dfdb * ESigma2;
-}
-
-double MiModule::get_chi2_int(double _tExp[2], double _l[2], double _beta[2], double _sigmaTot[2]) 
-{
-    double c            = LIGHT_SPEED;
-    double numerator    = pow((_tExp[1] - _l[1] / (_beta[1] * c)) - (_tExp[0] - _l[0] / (_beta[0] * c)), 2);
-    double denominator  = _sigmaTot[0] + _sigmaTot[1];
-
-    return numerator / denominator;
-}
-
-double MiModule::get_chi2_ext(double _tExp[2], double _l[2], double _beta[2], double _sigmaTot[2]) 
-{
-    double c            = LIGHT_SPEED;
-    double numerator    = pow(TMath::Abs(_tExp[1] - _tExp[0])  - (_l[1] / (_beta[1] * c)  + _l[0] / (_beta[0] * c)), 2);
-    double denominator  = _sigmaTot[0] + _sigmaTot[1];
-
-    return numerator / denominator;
 }

@@ -19,12 +19,14 @@ class MiCDCaloHit: public TObject
 		~MiCDCaloHit();
 
 		double getE();
+		double getEvis_bcu();
 		double getEs();
 		MiGID* getGID();
 		double gett();
 		double getts();
 
 		int setE(double in_E);
+		int setEvis_bcu(double in_Evis_bcu);
 		int setEs(double in_Es);
 		int setGID(MiGID& in_GID);
 		int sett(double in_t);
@@ -33,6 +35,7 @@ class MiCDCaloHit: public TObject
 	private:
 
 		double E;	// Particle energy
+		double Evis_bcu;	// Particle energy corrected via optical corrections
 		double Es;	// Particle energy sigma
 		MiGID GID;	// Hit GID
 		double t;	// Particle arrival time

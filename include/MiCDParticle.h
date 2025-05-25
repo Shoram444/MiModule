@@ -40,10 +40,14 @@ class MiCDParticle: public TObject
 
 		TVector3 getdirectionfromfoil();  	// Added 12.8.2024 @MP
 		int setdirectionfromfoil(double x, double y, double z); // Added 12.8.2024 @MP
+		
+		double getTrackLength(); // Added 12.8.2024 @MP
+		int setTrackLength(double in_trackLength); // Added 12.8.2024 @MP
 
 	private:
 
 		int charge;
+		double trackLength; // Added 12.8.2024 @MP - Particle track length in the calorimeter
 
 		vector<MiCDCaloHit> calohit;	// Particle calibrated calo hit(s)
 		vector<MiVertex> vertex;	// Particle vertices

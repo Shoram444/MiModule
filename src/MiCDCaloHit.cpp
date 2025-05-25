@@ -16,6 +16,11 @@ double MiCDCaloHit::getE()
 	return E;
 }
 
+double MiCDCaloHit::getEvis_bcu()
+{
+	return Evis_bcu;
+}
+
 double MiCDCaloHit::getEs()
 {
 	return Es;
@@ -36,9 +41,17 @@ double MiCDCaloHit::getts()
 	return ts;
 }
 
+
+
 int MiCDCaloHit::setE(double in_E)
 {
 	E = in_E;
+	return 0;
+}
+
+int MiCDCaloHit::setEvis_bcu(double in_Evis_bcu)
+{
+	Evis_bcu = in_Evis_bcu;
 	return 0;
 }
 
@@ -65,6 +78,7 @@ int MiCDCaloHit::setts(double in_ts)
 	ts = in_ts;
 	return 0;
 }
+
 
 
 

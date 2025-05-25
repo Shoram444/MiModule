@@ -48,7 +48,9 @@ vector<MiVertex>* MiCDParticle::getvertexv()
 {
 	return &vertex;
 }
-		
+
+
+
 int MiCDParticle::setcalohit(MiCDCaloHit& in_calohit)
 {
 	calohit.push_back(in_calohit);
@@ -78,3 +80,12 @@ int MiCDParticle::setdirectionfromfoil(double x, double y, double z)
 }
 
 
+double MiCDParticle::getTrackLength() // Added 12.8.2024 @MP
+{
+	return trackLength;
+}
+int MiCDParticle::setTrackLength(double in_trackLength) // Added 12.8.2024 @MP
+{
+	trackLength = in_trackLength;
+	return 0;
+}

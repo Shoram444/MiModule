@@ -10,6 +10,8 @@ MiEvent::MiEvent()
 	hasSD = false;
 
 	totE = 0.0;
+	Pint = 0.0; // internal probability
+	Pext = 0.0; // external probability
 }
 
 MiEvent::~MiEvent()
@@ -65,6 +67,20 @@ double MiEvent::gettotE()
 	{
 		return -1.0;
 	}
+}
+
+double MiEvent::getPint()
+{
+
+	return Pint;
+
+}
+
+double MiEvent::getPext()
+{
+	
+	return Pext;
+
 }
 
 void MiEvent::print()
@@ -139,6 +155,18 @@ int MiEvent::settotE(double in_totE)
 	totE = in_totE;
 	return 0;
 }
+int MiEvent::setPint(double in_Pint)
+{
+	Pint = in_Pint;
+	return 0;
+}
+
+int MiEvent::setPext(double in_Pext)
+{
+	Pext = in_Pext;
+	return 0;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 double MiEvent::getPTDverX(int in_part, int in_vert)
 {

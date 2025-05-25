@@ -37,8 +37,12 @@ class MiEvent: public TObject
 		int setSD(MiSD& in_SD);
 
 		int settotE(double in_totE);
+		int setPint(double in_Pint);
+		int setPext(double in_Pext);
 /////////////////////////////////////////////////////////////////////////
 		double gettotE();
+		double getPint();
+		double getPext();
 
 		double getPTDverX(int in_part, int in_vert);
 		double getPTDverY(int in_part, int in_vert);
@@ -59,6 +63,8 @@ class MiEvent: public TObject
 		MiSD SD;
 
 		double totE;
+		double Pint; // internal probability
+		double Pext; // external probability
 
 	ClassDef(MiEvent,1);		
 };

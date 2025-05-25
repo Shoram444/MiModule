@@ -59,23 +59,11 @@ class MiModule : public dpp::base_module
  
 		string its(int in_i); 	// Gets a integer number and returns string with this number (its=inttostring)
 
-
-		/// ToF
-		double calculatePint(MiPTD& in_PTD);
-		double calculatePext(MiPTD& in_PTD);
-		double get_beta(double _E);
-		double get_tTOF(double _l, double _beta);
-		double get_sigmaTot(double _tTOF, double _tExpSigma, double _E, double _ESigma);
-		double get_chi2_int(double _tExp[2], double _l[2], double _beta[2], double _sigmaTot[2]);
-		double get_chi2_ext(double _tExp[2], double _l[2], double _beta[2], double _sigmaTot[2]);
-
-
 	private:
 
 		void setInitialized(bool _init);
 		bool isInitialized();
 		bool init;
-
 
 		// collection of variables used in fillSD 
 		mctools::simulated_data       SD;
@@ -99,9 +87,6 @@ class MiModule : public dpp::base_module
 
 		TFile* subor;
 		TTree* strom;		
-
-		double ELECTRON_MASS_MEV = 0.5109989461; // in [MeV]
-    	double LIGHT_SPEED = 299792458 * 1e-9 * 1000; // in [mm/ns]
 	
 		// Macro which automatically creates the interface needed
 		// to enable the module to be loaded at runtime
